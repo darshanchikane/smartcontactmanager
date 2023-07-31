@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="my-card mt-2">
+
+                        <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+                            <p class="text-center" th:text="${session.message.content}"></p>
+                            <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+                        </div> 
+
+                        <div class="container text-center">
+                           <img src="" class="" width="80px;" th:src="@{../img/membership.png}" alt="">
+                        </div>
+
+                        <h3 class="text-center">Register Here </h3>
+                        <form  novalidate action="" th:action="@{/do-register}" method="post">
+                            
+                            <!-- name -->
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+
+                                <input type="text"
+                                name="name"
+                                class="form-control"
+                                id="name"
+                                aria-describedby="namehelp"
+                                placeholder="Enter your name"
+                                required>
+                            </div>
+
+                            <!-- email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+
+                                <input type="email"
+                                name="email"
+                                class="form-control"
+                                id="email"
+                                aria-describedby="emailhelp"
+                                placeholder="Enter your email"
+                                required>    
+                            </div>
+
+                            <!-- password -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+
+                                <input type="password"
+                                name="password"
+                                class="form-control"
+                                id="password"
+                                aria-describedby="passwordhelp"
+                                placeholder="Enter your password"
+                                required>    
+                            </div>
+
+                            <!-- about -->
+                            <div class="form-group">
+                                <label for="about" class="form-label">About</label>
+                                <textarea name="about" rows="6" id="about" class="form-control" placeholder="Enter about yourself"></textarea>
+                            </div>
+
+                            <!-- terms and conditions agreement -->
+                            <div class="form-group form-check">
+                                <input type="checkbox"
+                                name="agreement"
+                                class="form-check-input"
+                                id="agreement"
+                                />
+
+                                <label for="agreement">Accept terms and conditions</label>
+                            </div>
+
+                            <div class="container text-center">
+                                <button class="btn btn-primary text-white" type="submit">
+                                    Submit
+                                </button>
+
+                                <button class="btn btn-warning text-white" type="reset">
+                                    Reset 
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
