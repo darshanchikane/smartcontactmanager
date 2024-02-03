@@ -13,19 +13,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class MyConfig extends WebSecurityConfigurerAdapter {
-    
+
     @Bean
-    public UserDetailsService getUserDetailsService(){
+    public UserDetailsService getUserDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    public DaoAuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setUserDetailsService(this.getUserDetailsService());
@@ -38,11 +38,21 @@ public class MyConfig extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(authenticationProvider());
     }
 
-    @Override 
-    protected void  configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN")
-        .antMatchers("/user/**").hasAnyRole("USER")
-        .antMatchers("/**").permitAll().and().formLogin().loginPage("/signin").and().csrf().disable();
-        
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasAnyRole("ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER")
+                .antMatchers("/**").permitAll()
+                .and()
+                .formLogin()
+                .loginPage("/signin")
+                // the .loginPage() is used to give the url for the custom login page instead of spring security
+                // .loginProcessingUrl() you can use this method directly so that you can send the username password to this url directly
+                // .failureUrl() when you're url is unable to login
+                .defaultSuccessUrl("/user/index")
+                .permitAll()
+                .and()
+                .csrf().disable();
     }
 }

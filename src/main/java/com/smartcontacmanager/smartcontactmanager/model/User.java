@@ -26,7 +26,6 @@ public class User {
     @NotBlank(message = "Name should not be blank")
     @Size(min = 2, max = 20, message = "Name must be minimum 2 and maximum 20 characters are allowed")
     private String name;
-
     @Column(unique = true)
     private String email;
     private String password;
@@ -35,8 +34,8 @@ public class User {
     private String imageUrl;
     private String about;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER , mappedBy = "user")
-    private List<Contact> contacts = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER , mappedBy = "user", orphanRemoval = true)
+    private List<Contact> contacts = new ArrayList();
 
     public User(){
         super();
@@ -114,12 +113,12 @@ public class User {
         this.contacts = contacts;
     }
 
+
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-                + ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts
-                + "]";
+        return "User [id=" + id + ", name=" + name + ", email=" + email + ", password="
+                + password + ", role=" + role + ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about
+                + ", contacts=" + contacts + "]";
     }
-  
     
 }
